@@ -1,9 +1,9 @@
 using Quartz;
 using Serilog;
+using TNRD.Zeepkist.GTR.Backend.PersonalBestProcessor.Jobs;
 using TNRD.Zeepkist.GTR.Database;
-using Zeepkist.GTR.Backend.LevelScoreCalculator.Jobs;
 
-namespace Zeepkist.GTR.Backend.LevelScoreCalculator;
+namespace TNRD.Zeepkist.GTR.Backend.PersonalBestProcessor;
 
 internal class Program
 {

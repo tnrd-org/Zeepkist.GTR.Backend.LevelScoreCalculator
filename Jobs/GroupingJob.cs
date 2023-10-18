@@ -4,7 +4,7 @@ using Quartz;
 using TNRD.Zeepkist.GTR.Database;
 using TNRD.Zeepkist.GTR.Database.Models;
 
-namespace Zeepkist.GTR.Backend.LevelScoreCalculator.Jobs;
+namespace TNRD.Zeepkist.GTR.Backend.PersonalBestProcessor.Jobs;
 
 public class GroupingJob : IJob
 {

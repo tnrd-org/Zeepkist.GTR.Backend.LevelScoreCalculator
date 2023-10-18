@@ -4,7 +4,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>dotnet-Zeepkist.GTR.Backend.LevelScoreCalculator-FEA93B10-27FE-4CF1-900E-A3E968141B5E</UserSecretsId>
+        <AssemblyName>TNRD.Zeepkist.GTR.Backend.PersonalBestProcessor</AssemblyName>
+        <RootNamespace>TNRD.Zeepkist.GTR.Backend.PersonalBestProcessor</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
