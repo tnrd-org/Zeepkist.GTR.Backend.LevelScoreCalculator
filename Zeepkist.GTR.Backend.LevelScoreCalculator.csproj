@@ -4,8 +4,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <AssemblyName>TNRD.Zeepkist.GTR.Backend.PersonalBestProcessor</AssemblyName>
-        <RootNamespace>TNRD.Zeepkist.GTR.Backend.PersonalBestProcessor</RootNamespace>
+        <AssemblyName>TNRD.Zeepkist.GTR.Backend.LevelScoreCalculator</AssemblyName>
+        <RootNamespace>TNRD.Zeepkist.GTR.Backend.LevelScoreCalculator</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
