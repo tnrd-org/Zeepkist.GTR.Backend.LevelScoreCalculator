@@ -13,7 +13,10 @@ internal class Program
             .UseSerilog((context, configuration) =>
             {
                 configuration
+                    .Enrich.FromLogContext()
+                    .Enrich.WithProperty("Source", "LevelScoreCalculator")
                     .MinimumLevel.Debug()
+                    .WriteTo.Seq(context.Configuration["Seq:Url"], apiKey: context.Configuration["Seq:Key"])
                     .WriteTo.Console();
             })
             .ConfigureServices((context, services) =>
