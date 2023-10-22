@@ -25,14 +25,14 @@ internal class Program
                 services.AddNpgsql<GTRContext>(context.Configuration["Database:ConnectionString"]);
                 services.AddQuartz(q =>
                 {
-                    q.AddJob<CalculateJob>(CalculateJob.JobKey, options => options.StoreDurably());
-                    q.AddJob<UpdateJob>(UpdateJob.JobKey, options => options.StoreDurably());
-                    q.AddJob<GroupingJob>(GroupingJob.JobKey)
+                    q.AddJob<CalculateLevelScoreJob>(CalculateLevelScoreJob.JobKey, options => options.StoreDurably());
+                    q.AddJob<UpsertDatabaseJob>(UpsertDatabaseJob.JobKey, options => options.StoreDurably());
+                    q.AddJob<FilterLevelsJob>(FilterLevelsJob.JobKey)
                         .AddTrigger(options =>
                         {
                             options
-                                .ForJob(GroupingJob.JobKey)
-                                .WithIdentity(GroupingJob.JobKey.Name + "-Trigger")
+                                .ForJob(FilterLevelsJob.JobKey)
+                                .WithIdentity(FilterLevelsJob.JobKey.Name + "-Trigger")
                                 .WithCronSchedule("0 0/15 * ? * * *");
                         });
                 });

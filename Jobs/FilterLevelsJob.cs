@@ -6,15 +6,15 @@ using TNRD.Zeepkist.GTR.Database.Models;
 
 namespace TNRD.Zeepkist.GTR.Backend.LevelScoreCalculator.Jobs;
 
-public class GroupingJob : IJob
+public class FilterLevelsJob : IJob
 {
-    public static readonly JobKey JobKey = new("Grouping");
+    public static readonly JobKey JobKey = new("FilterLevels");
 
-    private readonly ILogger<GroupingJob> logger;
+    private readonly ILogger<FilterLevelsJob> logger;
     private readonly GTRContext db;
     private readonly IMemoryCache memoryCache;
 
-    public GroupingJob(GTRContext db, IMemoryCache memoryCache, ILogger<GroupingJob> logger)
+    public FilterLevelsJob(GTRContext db, IMemoryCache memoryCache, ILogger<FilterLevelsJob> logger)
     {
         this.db = db;
         this.memoryCache = memoryCache;
@@ -31,7 +31,11 @@ public class GroupingJob : IJob
 
         foreach (IGrouping<string, Record> grouping in groups)
         {
-            List<Record> records = grouping.OrderBy(x => x.DateCreated).ToList();
+            List<Record> records = grouping
+                .OrderByDescending(x => x.DateCreated)
+                .Take(1)
+                .ToList();
+
             if (records.Count == 0)
             {
                 logger.LogInformation("Skipping {Level} because there are no records", grouping.Key);
@@ -43,7 +47,7 @@ public class GroupingJob : IJob
                 latestRecord = DateTime.MinValue;
             }
 
-            Record lastRecord = records.Last();
+            Record lastRecord = records.First();
             if (lastRecord.DateCreated == latestRecord)
             {
                 logger.LogInformation("Skipping {Level} because it has no new records", grouping.Key);
@@ -52,10 +56,10 @@ public class GroupingJob : IJob
 
             memoryCache.Set(grouping.Key, lastRecord.DateCreated);
 
-            await context.Scheduler.TriggerJob(CalculateJob.JobKey,
+            await context.Scheduler.TriggerJob(CalculateLevelScoreJob.JobKey,
                 new JobDataMap
                 {
-                    { CalculateJob.GROUP_KEY, grouping }
+                    { CalculateLevelScoreJob.GROUP_KEY, grouping }
                 },
                 context.CancellationToken);
         }

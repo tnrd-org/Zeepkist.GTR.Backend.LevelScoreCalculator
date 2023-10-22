@@ -6,17 +6,17 @@ using TNRD.Zeepkist.GTR.Database.Models;
 
 namespace TNRD.Zeepkist.GTR.Backend.LevelScoreCalculator.Jobs;
 
-public class UpdateJob : IJob
+public class UpsertDatabaseJob : IJob
 {
     public const string LEVEL_KEY = "Level";
     public const string POINTS_KEY = "Points";
 
-    public static readonly JobKey JobKey = new("Update");
+    public static readonly JobKey JobKey = new("UpsertDatabase");
 
-    private readonly ILogger<UpdateJob> logger;
+    private readonly ILogger<UpsertDatabaseJob> logger;
     private readonly GTRContext db;
 
-    public UpdateJob(ILogger<UpdateJob> logger, GTRContext db)
+    public UpsertDatabaseJob(ILogger<UpsertDatabaseJob> logger, GTRContext db)
     {
         this.logger = logger;
         this.db = db;

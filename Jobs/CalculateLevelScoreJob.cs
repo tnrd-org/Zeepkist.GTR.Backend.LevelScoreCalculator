@@ -3,15 +3,15 @@ using TNRD.Zeepkist.GTR.Database.Models;
 
 namespace TNRD.Zeepkist.GTR.Backend.LevelScoreCalculator.Jobs;
 
-public class CalculateJob : IJob
+public class CalculateLevelScoreJob : IJob
 {
     public const string GROUP_KEY = "Group";
 
-    public static readonly JobKey JobKey = new("Calculate");
+    public static readonly JobKey JobKey = new("CalculateLevelScore");
 
-    private readonly ILogger<CalculateJob> logger;
+    private readonly ILogger<CalculateLevelScoreJob> logger;
 
-    public CalculateJob(ILogger<CalculateJob> logger)
+    public CalculateLevelScoreJob(ILogger<CalculateLevelScoreJob> logger)
     {
         this.logger = logger;
     }
@@ -40,11 +40,11 @@ public class CalculateJob : IJob
             }
         }
 
-        context.Scheduler.TriggerJob(UpdateJob.JobKey,
+        context.Scheduler.TriggerJob(UpsertDatabaseJob.JobKey,
             new JobDataMap()
             {
-                { UpdateJob.LEVEL_KEY, grouping.Key },
-                { UpdateJob.POINTS_KEY, timesBeaten + userIds.Count }
+                { UpsertDatabaseJob.LEVEL_KEY, grouping.Key },
+                { UpsertDatabaseJob.POINTS_KEY, timesBeaten + userIds.Count }
             },
             context.CancellationToken);
 
