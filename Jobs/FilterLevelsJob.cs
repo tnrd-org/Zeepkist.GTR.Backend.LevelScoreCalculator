@@ -29,8 +29,9 @@ public class FilterLevelsJob : IJob
             .GroupBy(x => x.Level)
             .ToListAsync(context.CancellationToken);
 
-        foreach (IGrouping<string, Record> grouping in groups)
+        for (int i = 0; i < groups.Count; i++)
         {
+            IGrouping<string, Record> grouping = groups[i];
             List<Record> records = grouping
                 .OrderByDescending(x => x.DateCreated)
                 .Take(1)
